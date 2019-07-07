@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                System.out.println("ooooo ADD BOOKED LIST");
+                System.out.println("ooooo ADD BOOKED LIST ");
                 calendar.setBookedDatesList(cl);
             }
         }, 1000);
