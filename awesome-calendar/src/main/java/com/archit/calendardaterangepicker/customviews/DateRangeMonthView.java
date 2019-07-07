@@ -25,6 +25,7 @@ import com.archit.calendardaterangepicker.timepicker.AwesomeTimePickerDialog;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by archit.shah on 08/09/2017.
@@ -35,6 +36,8 @@ class DateRangeMonthView extends LinearLayout {
     private static final String LOG_TAG = DateRangeMonthView.class.getSimpleName();
     private LinearLayout llDaysContainer;
     private LinearLayout llTitleWeekContainer;
+
+    private static List<Calendar> bookedDaysList;
 
     private Calendar currentCalendarMonth;
 
@@ -104,6 +107,8 @@ class DateRangeMonthView extends LinearLayout {
     private OnClickListener dayClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
+
+            System.out.println("oooooooo ON CLICK");
 
             if (calendarStyleAttr.isEditable()) {
                 int key = (int) view.getTag();
@@ -283,6 +288,12 @@ class DateRangeMonthView extends LinearLayout {
             container.tvDate.setTextSize(TypedValue.COMPLEX_UNIT_PX, calendarStyleAttr.getTextSizeDate());
         }
 
+        if(containsCalendarInBooked(calendar)) {
+            System.out.println("ooooo MARRRKKKKK " + calendar.getTime());
+            markBooked(container);
+
+        }
+
         container.rootView.setTag(DayContainer.GetContainerKey(calendar));
     }
 
@@ -312,6 +323,20 @@ class DateRangeMonthView extends LinearLayout {
         container.tvDate.setTextColor(calendarStyleAttr.getDisableDateColor());
         container.rootView.setVisibility(VISIBLE);
         container.rootView.setOnClickListener(null);
+    }
+
+    private void markBooked(DayContainer container) {
+        container.tvDate.setBackgroundColor(Color.BLUE);
+        container.strip.setBackgroundColor(Color.TRANSPARENT);
+        container.rootView.setBackgroundColor(Color.TRANSPARENT);
+        container.tvDate.setTextColor(calendarStyleAttr.getDisableDateColor());
+        container.rootView.setVisibility(VISIBLE);
+        container.rootView.setOnClickListener(null);
+    }
+
+    public void drawBooked(List<Calendar> bookedList){
+        bookedDaysList = bookedList;
+        drawCalendarForMonth(currentCalendarMonth);
     }
 
     /**
@@ -424,5 +449,13 @@ class DateRangeMonthView extends LinearLayout {
             textView.setTypeface(calendarStyleAttr.getFonts());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calendarStyleAttr.getTextSizeWeek());
         }
+    }
+
+    private boolean containsCalendarInBooked(Calendar calendar){
+        if(bookedDaysList != null)
+        for(Calendar c: bookedDaysList)
+            if(DateRangeCalendarView.isDateSame(c, calendar))
+                return true;
+        return false;
     }
 }

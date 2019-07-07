@@ -18,6 +18,7 @@ import static com.archit.calendardaterangepicker.customviews.DateRangeCalendarMa
 class DateRangeCalendarManager {
 
     private Calendar minSelectedDate, maxSelectedDate;
+    private Calendar bookedDateMin, bookedDateMax;
     private List<Calendar> calendarMonths = new ArrayList<>();
     private final static String DATE_FORMAT = "yyyyMMdd";
     public static SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -49,6 +50,22 @@ class DateRangeCalendarManager {
 
     public Calendar getMinSelectedDate() {
         return minSelectedDate;
+    }
+
+    public Calendar getBookedDateMin() {
+        return bookedDateMin;
+    }
+
+    public void setBookedDateMin(Calendar bookedDateMin) {
+        this.bookedDateMin = bookedDateMin;
+    }
+
+    public Calendar getBookedDateMax() {
+        return bookedDateMax;
+    }
+
+    public void setBookedDateMax(Calendar bookedDateMax) {
+        this.bookedDateMax = bookedDateMax;
     }
 
     /**

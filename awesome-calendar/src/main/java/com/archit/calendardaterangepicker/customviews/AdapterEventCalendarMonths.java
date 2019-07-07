@@ -23,8 +23,10 @@ public class AdapterEventCalendarMonths extends PagerAdapter {
     private DateRangeCalendarView.CalendarListener calendarListener;
     private DateRangeCalendarManager dateRangeCalendarManager;
     private Handler mHandler;
+    private DateRangeMonthView dateRangeMonthView;
 
-    public AdapterEventCalendarMonths(Context mContext, List<Calendar> list, CalendarStyleAttr calendarStyleAttr) {
+    public AdapterEventCalendarMonths(Context mContext,
+                                      List<Calendar> list, CalendarStyleAttr calendarStyleAttr) {
         this.mContext = mContext;
         dataList = list;
         this.calendarStyleAttr = calendarStyleAttr;
@@ -46,11 +48,13 @@ public class AdapterEventCalendarMonths extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
+        System.out.println("ooooo INSTANTIATE ITEM");
+
         Calendar modelObject = dataList.get(position);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.layout_pager_month, container, false);
 
-        DateRangeMonthView dateRangeMonthView = layout.findViewById(R.id.cvEventCalendarView);
+        dateRangeMonthView = layout.findViewById(R.id.cvEventCalendarView);
         dateRangeMonthView.drawCalendarForMonth(calendarStyleAttr, getCurrentMonth(modelObject), dateRangeCalendarManager);
         dateRangeMonthView.setCalendarListener(calendarAdapterListener);
 
@@ -165,5 +169,10 @@ public class AdapterEventCalendarMonths extends PagerAdapter {
      */
     public boolean isEditable() {
         return calendarStyleAttr.isEditable();
+    }
+
+    public void setBookedDaysList(List<Calendar> bookedDaysList) {
+        if(dateRangeMonthView != null)
+            dateRangeMonthView.drawBooked(bookedDaysList);
     }
 }

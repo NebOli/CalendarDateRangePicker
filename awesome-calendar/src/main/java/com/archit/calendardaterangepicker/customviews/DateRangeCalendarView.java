@@ -42,7 +42,6 @@ public class DateRangeCalendarView extends LinearLayout {
     private CalendarStyleAttr calendarStyleAttr;
     private CalendarListener mCalendarListener;
 
-
     private final static int TOTAL_ALLOWED_MONTHS = 30;
 
     public DateRangeCalendarView(Context context) {
@@ -349,9 +348,14 @@ public class DateRangeCalendarView extends LinearLayout {
         }
     }
 
-    private boolean isDateSame(@NonNull Calendar one, @NonNull Calendar second) {
+    public static boolean isDateSame(@NonNull Calendar one, @NonNull Calendar second) {
         return one.get(Calendar.YEAR) == second.get(Calendar.YEAR)
                 && one.get(Calendar.MONTH) == second.get(Calendar.MONTH)
                 && one.get(Calendar.DATE) == second.get(Calendar.DATE);
+    }
+
+
+    public void setBookedDatesList(List<Calendar> bookedDatesList) {
+        adapterEventCalendarMonths.setBookedDaysList(bookedDatesList);
     }
 }
